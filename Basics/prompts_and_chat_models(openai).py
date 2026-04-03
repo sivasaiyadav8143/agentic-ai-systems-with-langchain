@@ -1,5 +1,5 @@
 from dotenv import load_dotenv
-# from langchain_openai import ChatOpenAI
+from langchain_openai import ChatOpenAI
 
 from langchain_core.prompts import PromptTemplate
 load_dotenv()
@@ -37,9 +37,12 @@ def main():
     2. two interesting facts about the person
     """
 
-    prompt = PromptTemplate(template=summary_template, input_variables=["information"])
+    prompt = PromptTemplate(
+        template=summary_template, input_variables=["information"]
+    )
 
     llm = ChatOpenAI(model="gpt-5-nano", temperature=0)
+
     chain = prompt | llm
 
     response = chain.invoke(input={"information": information})
