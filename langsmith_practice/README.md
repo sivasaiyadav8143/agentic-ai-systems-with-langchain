@@ -10,6 +10,14 @@ This folder contains experiments using LangSmith to trace LLM calls with:
 - How to compare OpenAI vs Ollama behavior
 - How to inspect traces in the LangSmith UI
 
+## Screenshots
+
+### OpenAI Trace
+![OpenAI Trace](screenshots/openai_trace.png)
+
+### Ollama Trace
+![Ollama Trace](screenshots/ollama_trace.png)
+
 ## Example Traces
 - OpenAI trace: [OpenAI](https://eu.smith.langchain.com/public/a4afbe99-9ee2-4c26-92e9-a33e3dcc2828/r)
 - Ollama trace: [Ollama](https://eu.smith.langchain.com/public/94a51837-03da-4918-a3e9-8bb8a3b24c57/r)
