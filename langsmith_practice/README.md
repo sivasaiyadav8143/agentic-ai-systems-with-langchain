@@ -27,10 +27,10 @@ This folder contains experiments using LangSmith to trace LLM calls with:
    - pip install langchain langchain-openai langchain-ollama langsmith
 
 2. Set environment variables:
-   - export LANGCHAIN_API_KEY=<your-key>
-   - export LANGSMITH_TRACING=true
-   - export LANGCHAIN_PROJECT=<your-project-name>
-   - export LANGSMITH_ENDPOINT=https://eu.api.smith.langchain.com
+   - LANGCHAIN_API_KEY=<your-key>
+   - LANGSMITH_TRACING=true
+   - LANGCHAIN_PROJECT=<your-project-name>
+   - LANGSMITH_ENDPOINT=https://eu.api.smith.langchain.com
 
 3. Run:
    - python openai_trace_example.py
