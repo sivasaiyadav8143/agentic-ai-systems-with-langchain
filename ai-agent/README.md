@@ -19,6 +19,11 @@ In simple terms:
 - Use LangChain's built-in tool integrations
 - Implement structured outputs with Pydantic models
 
+## Screenshots
+
+### Search Agent with langchain_tavily
+![search_agent_tavily](screenshots/search_agent_tavily.png)
+
 ## How to run
 1. Install dependencies:
    ```bash
