@@ -27,14 +27,14 @@ In simple terms:
 ## How to run
 1. Install dependencies:
    ```bash
-   pip install tavily-python langchain-tavily
+   uv add tavily-python langchain-tavily
    ```
 
 2. Set environment variables:
    ```bash
    # Create a .env file with:
-   export OPENAI_API_KEY=your_openai_key
-   export TAVILY_API_KEY=your_tavily_key
+   OPENAI_API_KEY=your_openai_key
+   TAVILY_API_KEY=your_tavily_key
    ```
 
 3. Run:
