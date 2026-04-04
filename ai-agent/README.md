@@ -1,6 +1,15 @@
-# LangChain Search Agents Tutorial
+# LangChain Search Agents
 
 This folder demonstrates how to build search agents using LangChain's `create_agent` interface and progresses through three key concepts, showing how to evolve from a basic custom tool implementation to using structured outputs with built-in LangChain integrations.
+
+## 🧠 What is an AI Agent?
+
+An AI Agent is an LLM that can **take actions**, not just generate text.  
+It can think about a problem, decide the next step, use tools, observe results, and continue working until it completes the task.
+
+In simple terms:
+
+**An AI Agent is an LLM that can reason step‑by‑step, use external tools or APIs, and work toward a goal instead of giving a single response.**
 
 ## Learning Objectives
 
@@ -12,7 +21,9 @@ This folder demonstrates how to build search agents using LangChain's `create_ag
 
 ## How to run
 1. Install dependencies:
-   - pip install tavily-python
+   ```bash
+   pip install tavily-python
+   ```
 
 2. Set environment variables:
    ```bash
