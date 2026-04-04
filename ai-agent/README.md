@@ -27,7 +27,7 @@ In simple terms:
 ## How to run
 1. Install dependencies:
    ```bash
-   pip install tavily-python
+   pip install tavily-python langchain-tavily
    ```
 
 2. Set environment variables:
