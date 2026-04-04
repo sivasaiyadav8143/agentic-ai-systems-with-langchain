@@ -4,12 +4,72 @@ This folder demonstrates how to build search agents using LangChain's `create_ag
 
 ## 🧠 What is an AI Agent?
 
-An AI Agent is an LLM that can **take actions**, not just generate text.  
-It can think about a problem, decide the next step, use tools, observe results, and continue working until it completes the task.
+An agent is an LLM that can decide what to do next, instead of you hard‑coding every step.
 
-In simple terms:
+It does 3 things:
 
-**An AI Agent is an LLM that can reason step‑by‑step, use external tools or APIs, and work toward a goal instead of giving a single response.**
+1. Thinks (LLM decides what action/tool is needed)
+2. Acts (executes that tool)
+3. Observes (reads the tool result)
+4. Repeats until it can answer the user
+
+This loop is the core of agentic behavior.
+
+The Agent Loop:
+
+Here’s the exact cycle:
+
+**User asks → LLM decides → LLM calls a tool → Tool returns data → LLM reasons again → Final answer**
+
+This is called ReAct (Reason + Act).
+
+### Example:
+```bash
+Step 1 — User asks
+“What is the weather in London?”
+
+Step 2 — LLM decides
+“I need to call the search tool.”
+
+Step 3 — LLM acts
+Calls the tool:
+search("weather in London")
+
+Step 4 — Tool returns
+“Rainy, 12°C”
+
+Step 5 — LLM reasons again
+“Now I can answer the user.”
+
+Step 6 — LLM responds
+“It’s rainy and 12°C.”
+
+```
+This loop is what makes it an agent, not just a chatbot.
+
+## 🧩 Key Components of an Agent
+
+1. **LLM**  
+   - The brain  
+   - Decides what to do next  
+
+2. **Tools**  
+   Functions the agent can call, such as:  
+   - Web search  
+   - Calculator  
+   - Database query  
+   - Python code  
+   - API calls  
+
+3. **Agent Executor**  
+   Runs the loop:  
+   - think  
+   - act  
+   - observe  
+   - repeat  
+
+4. **Memory (optional)**  
+   - Stores past interactions  
 
 ## Learning Objectives
 
