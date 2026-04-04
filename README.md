@@ -72,6 +72,7 @@ Through this repository, I demonstrate:
 - LangGraph  
 - LangSmith  
 - MCP  
+- Tavily (real-time web search)
 - FAISS / Pinecone / Chroma  
 - OpenAI / Anthropic / Groq models  
 - uv (environment & dependency manager)
