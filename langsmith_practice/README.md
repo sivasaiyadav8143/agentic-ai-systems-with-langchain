@@ -24,7 +24,7 @@ This folder contains experiments using LangSmith to trace LLM calls with:
 
 ## How to run
 1. Install dependencies:
-   - pip install langchain langchain-openai langchain-ollama langsmith
+   - uv add langchain langchain-openai langchain-ollama langsmith
 
 2. Set environment variables:
    - LANGCHAIN_API_KEY=<your-key>
