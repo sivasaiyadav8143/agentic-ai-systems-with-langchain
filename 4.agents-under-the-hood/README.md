@@ -57,5 +57,5 @@ It just works. But what's actually happening underneath all these abstractions?
 **Stack:** `langchain`, `langsmith` for tracing
 
 ![Screenshot](screenshots/agent_loop_langchain_tool_calling.png)
-- Langsmith Link: [Trace](https://eu.smith.langchain.com/public/4427b649-d676-4baf-8148-99e8b76a8088/r)
+- Langsmith Link: [Trace](https://eu.smith.langchain.com/public/93f7a10f-1080-4adb-99d5-6b3577c1b8c3/r)
 ---
