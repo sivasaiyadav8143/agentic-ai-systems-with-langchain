@@ -32,6 +32,27 @@ Each file is self-contained and runnable on its own.
 
 At their core, all three implementations share the same loop — the agent reasons, picks a tool, executes it, observes the result, and repeats until it has a final answer:
 
+```mermaid
+graph TB
+    Input([User Question]) --> Loop
+
+    subgraph Loop["Agent Loop"]
+        direction TB
+        LLM{{"🧠 LLM<br/>(Reason)"}}
+        LLM -->|"Tool Call"| Execute["⚡ Execute Tool"]
+        Execute --> Observation["📋 Observation<br/>(Tool Result)"]
+        Observation --> LLM
+    end
+
+    LLM -->|"Final Answer"| Output([Answer to User])
+
+    style Input fill:#1e3a5f,stroke:#1e3a5f,color:#fff
+    style Output fill:#1e3a5f,stroke:#1e3a5f,color:#fff
+    style LLM fill:#e8eaf6,stroke:#5c6bc0,stroke-width:2px
+    style Execute fill:#f3e5f5,stroke:#8e24aa,stroke-width:2px
+    style Observation fill:#e0e0e0,stroke:#616161,stroke-width:2px
+    style Loop fill:#fafafa,stroke:#bdbdbd,stroke-width:1px,stroke-dasharray: 5 5
+```
 ---
 
 ## Implementations
