@@ -43,7 +43,7 @@ We start here — this is how you'd normally build an agent. Reading through the
 
 - **Imports & config** — LangChain, LangSmith, model name
 - **Tools** — two plain Python functions decorated with `@tool`. LangChain auto-generates the JSON schema from the function signature and docstring. No manual schema writing needed.
-- **Agent loop** — initialize the LLM with `init_chat_model(f"ollama:{MODEL}")`, attach tools with `bind_tools()`, then loop: invoke the LLM, check if it returned tool calls, execute the tool, append a `ToolMessage`, repeat.
+- **Agent loop** — initialise the LLM with `init_chat_model(f"ollama:{MODEL}")`, attach tools with `bind_tools()`, then loop: invoke the LLM, check if it returned tool calls, execute the tool, append a `ToolMessage`, repeat.
 
 **What LangChain gives you:**
 - `@tool` → auto-generates JSON tool schema from your function
@@ -56,6 +56,6 @@ It just works. But what's actually happening underneath all these abstractions?
 
 **Stack:** `langchain`, `langsmith` for tracing
 
-![Screenshot](screenshots/openai_trace.png)
+![Screenshot](screenshots/agent_loop_langchain_tool_calling.png)
 - Langsmith Link: [Trace](https://eu.smith.langchain.com/public/4427b649-d676-4baf-8148-99e8b76a8088/r)
 ---
