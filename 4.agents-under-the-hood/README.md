@@ -32,6 +32,27 @@ Each file is self-contained and runnable on its own.
 
 At their core, all three implementations share the same loop — the agent reasons, picks a tool, executes it, observes the result, and repeats until it has a final answer:
 
+```mermaid
+graph TB
+    Input([User Question]) --> Loop
+
+    subgraph Loop["Agent Loop"]
+        direction TB
+        LLM{{"🧠 LLM<br/>(Reason)"}}
+        LLM -->|"Tool Call"| Execute["⚡ Execute Tool"]
+        Execute --> Observation["📋 Observation<br/>(Tool Result)"]
+        Observation --> LLM
+    end
+
+    LLM -->|"Final Answer"| Output([Answer to User])
+
+    style Input fill:#1e3a5f,stroke:#1e3a5f,color:#fff
+    style Output fill:#1e3a5f,stroke:#1e3a5f,color:#fff
+    style LLM fill:#e8eaf6,stroke:#5c6bc0,stroke-width:2px
+    style Execute fill:#f3e5f5,stroke:#8e24aa,stroke-width:2px
+    style Observation fill:#e0e0e0,stroke:#616161,stroke-width:2px
+    style Loop fill:#fafafa,stroke:#bdbdbd,stroke-width:1px,stroke-dasharray: 5 5
+```
 ---
 
 ## Implementations
@@ -43,7 +64,7 @@ We start here — this is how you'd normally build an agent. Reading through the
 
 - **Imports & config** — LangChain, LangSmith, model name
 - **Tools** — two plain Python functions decorated with `@tool`. LangChain auto-generates the JSON schema from the function signature and docstring. No manual schema writing needed.
-- **Agent loop** — initialize the LLM with `init_chat_model(f"ollama:{MODEL}")`, attach tools with `bind_tools()`, then loop: invoke the LLM, check if it returned tool calls, execute the tool, append a `ToolMessage`, repeat.
+- **Agent loop** — initialise the LLM with `init_chat_model(f"ollama:{MODEL}")`, attach tools with `bind_tools()`, then loop: invoke the LLM, check if it returned tool calls, execute the tool, append a `ToolMessage`, repeat.
 
 **What LangChain gives you:**
 - `@tool` → auto-generates JSON tool schema from your function
@@ -56,6 +77,30 @@ It just works. But what's actually happening underneath all these abstractions?
 
 **Stack:** `langchain`, `langsmith` for tracing
 
-![Screenshot](screenshots/openai_trace.png)
-- Langsmith Link: [Trace](https://eu.smith.langchain.com/public/4427b649-d676-4baf-8148-99e8b76a8088/r)
+![Screenshot](screenshots/agent_loop_langchain_tool_calling.png)
+- Langsmith Link: [Trace](https://eu.smith.langchain.com/public/93f7a10f-1080-4adb-99d5-6b3577c1b8c3/r)
+---
+
+### 2. Raw Function Calling (No LangChain)
+**File:** [`2.agent_loop_raw_function_calling.py`](2.agent_loop_raw_function_calling.py)
+
+Now we peel off LangChain and build the exact same agent using only the `ollama` Python SDK. Compare with file 1 side-by-side to see what LangChain was doing for you. Reading top to bottom:
+
+- **Imports & config** — just `ollama` and `langsmith`. No LangChain.
+- **Tools** — the same two Python functions, but now they're just plain functions (no `@tool` decorator).
+- **Tool registry** — a simple dict mapping tool names to functions. In file 1, LangChain built this for you with `{t.name: t for t in tools}`.
+- **JSON tool schemas** — hand-written JSON dictionaries describing each tool's name, description, and parameters. This is what `@tool` auto-generated in file 1. You can see how verbose it is.
+- **Agent loop** — call `ollama.chat()` directly, pass the JSON schemas as `tools=`, check `response.message.tool_calls`, dispatch with `tools[name](**args)`, append raw `{"role": "tool"}` dicts to the message history.
+
+**What you see without LangChain:**
+- Tool schemas are ~30 lines of JSON you have to write by hand
+- Messages are plain dicts (`{"role": "system", "content": "..."}`) instead of typed objects
+- Tool results are appended as `{"role": "tool", "content": result}` instead of `ToolMessage`
+- Switching to a different provider (OpenAI, Anthropic) means rewriting the SDK calls, message format, and tool schema format
+
+**Stack:** `ollama` SDK, `langsmith` for tracing
+
+![Screenshot](screenshots/agent_loop_raw_function_calling.png)
+- Langsmith Link: [Trace](https://eu.smith.langchain.com/public/25d3332b-e83f-4ee7-b266-ddedc185b2fa/r)
+
 ---
