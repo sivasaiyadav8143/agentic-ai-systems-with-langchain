@@ -15,12 +15,12 @@ Every AI agent — whether built with LangChain, LlamaIndex, CrewAI, or from scr
 ```
 ┌─────────────────────────────────────────────┐
 │  File 1: LangChain                          │  ← @tool, bind_tools(), ToolMessage
-│  ┌────────────────────────────────────────┐  │
-│  │  File 2: Raw Function Calling          │  │  ← Hand-written JSON schemas, ollama.chat()
-│  │  ┌─────────────────────────────────┐   │  │
-│  │  │  File 3: Raw ReAct Prompt       │   │  │  ← Prompt template, regex, scratchpad
-│  │  └─────────────────────────────────┘   │  │
-│  └────────────────────────────────────────┘  │
+│  ┌────────────────────────────────────────┐ │
+│  │  File 2: Raw Function Calling          │ │  ← Hand-written JSON schemas, ollama.chat()
+│  │  ┌─────────────────────────────────┐   │ │
+│  │  │  File 3: Raw ReAct Prompt       │   │ │  ← Prompt template, regex, scratchpad
+│  │  └─────────────────────────────────┘   │ │
+│  └────────────────────────────────────────┘ │
 └─────────────────────────────────────────────┘
 ```
 
