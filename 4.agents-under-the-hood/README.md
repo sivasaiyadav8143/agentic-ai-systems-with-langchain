@@ -104,3 +104,51 @@ Now we peel off LangChain and build the exact same agent using only the `ollama`
 - Langsmith Link: [Trace](https://eu.smith.langchain.com/public/25d3332b-e83f-4ee7-b266-ddedc185b2fa/r)
 
 ---
+
+### 3. Raw ReAct Prompt (No Function Calling, No LangChain)
+**File:** [`3.raw_react_prompt.py`](3.raw_react_prompt.py)
+
+Now we peel off function calling itself. This is how agents worked **before LLMs had built-in tool calling** (pre-June 2023). No structured `tool_calls` in the API response — the LLM just outputs raw text, and we parse it with regex. Reading top to bottom:
+
+- **Imports & config** — `ollama`, `re` (regex), `langsmith`. No LangChain, no function calling.
+- **Tools** — same two Python functions, same tool registry dict.
+- **ReAct prompt template** — this is the key. Instead of passing JSON tool schemas to the API, we describe the tools *inside the prompt itself* as plain text. The prompt also instructs the LLM to follow a strict format: `Thought → Action → Action Input → Observation`. This is the original **ReAct pattern** from the [Yao et al. 2022 paper](https://arxiv.org/abs/2210.03629).
+- **Agent loop** — completely different from files 1 and 2:
+  - Send the full prompt (template + accumulated scratchpad) as a single user message
+  - Use `stop=["\nObservation"]` so the LLM stops before hallucinating the tool result — this lets us inject the real result
+  - Parse the LLM's raw text output with regex to extract `Action:` and `Action Input:`
+  - Execute the tool, then append the full cycle (`Thought/Action/Observation`) to the scratchpad string
+  - Check for `"Final Answer:"` in the text to know when the agent is done
+
+**What's different without function calling:**
+- No JSON schemas — tools are described as plain text in the prompt
+- No structured `tool_calls` — the LLM outputs text like `Action: get_product_price`
+- No message history — instead, a **scratchpad** string accumulates the full reasoning chain
+- Parsing is fragile — regex can break if the LLM doesn't follow the format exactly
+- The `stop` parameter is critical — without it, the LLM would hallucinate tool results
+
+**Stack:** `ollama` SDK, `re` (regex), `langsmith` for tracing
+
+![Screenshot](screenshots/raw_react_prompt.png)
+- Langsmith Link: [Trace](https://eu.smith.langchain.com/public/e288ec1a-a3c9-44fc-ab76-d0612c17e7f9/r)
+
+---
+
+## The Same Agent, Three Ways
+
+All three files answer the same question with the same tools:
+
+> **"What is the price of a laptop after applying a gold discount?"**
+
+**Tools:**
+- `get_product_price(product)` — looks up prices from a catalog (laptop: $1,299.99)
+- `apply_discount(price, discount_tier)` — applies a named discount tier (gold: 23% off)
+
+**Expected flow:**
+1. Agent calls `get_product_price("laptop")` → gets `1299.99`
+2. Agent calls `apply_discount(1299.99, "gold")` → gets `1000.99`
+3. Agent returns the final answer
+
+The discount tiers use non-obvious percentages (bronze: 5%, silver: 12%, gold: 23%) so the LLM can't guess the result — it *must* use the tools.
+
+---
