@@ -22,6 +22,11 @@ This Section progressively builds a complete RAG pipeline:
 - **Naive RAG**: Manual retrieval → format → prompt → LLM pipeline
 - **LCEL RAG**: Declarative chain using `|` operator with built-in streaming/async
 
+### Screenshots
+
+![Screenshot](screenshots/pinecone.png)
+![Screenshot](screenshots/langsmith.png)
+
 ## Why LCEL?
 
 The Section demonstrates two approaches to building RAG:
