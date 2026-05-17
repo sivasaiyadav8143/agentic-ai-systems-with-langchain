@@ -23,8 +23,9 @@ This Section progressively builds a complete RAG pipeline:
 - **LCEL RAG**: Declarative chain using `|` operator with built-in streaming/async
 
 ### Screenshots
-
-![Screenshot](screenshots/pinecone.png)
+- **Pinecone**:
+![Screenshot](screenshots/pinecone.png) 
+- **Langsmith**:
 ![Screenshot](screenshots/langsmith.png)
 
 ## Why LCEL?
